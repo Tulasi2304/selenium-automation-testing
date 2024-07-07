@@ -7,6 +7,7 @@ describe('Open Myntra and automate search', function () {
   let driver;
   let options = new chrome.Options();
   options.addArguments("--disable-notifications");
+  options.addArguments("--log-level=1");
 
   before(async () => {
 
@@ -31,28 +32,34 @@ describe('Open Myntra and automate search', function () {
   });
 
   it('2. Open product', async () => {
-    await driver.findElement(By.xpath("//img[@title=\"Nasher Miles Vienna Hard-Sided Medium Trolley Suitcase\"]")).click();
+    // await driver.findElement(By.xpath("//img[@title = \"Nasher Miles Vienna Hard-Sided Medium Trolley Suitcase\"]")).click();
+    await driver.findElement(By.xpath("//ul[@class=\"results-base\"]/li[1]")).click();
   });
 
   it('3. Add product to bag', async () => {
 
     let currentTab = await driver.getWindowHandle();
     const windows = await driver.getAllWindowHandles();
-    windows.forEach( async tab => {
-      if (!tab !== currentTab) {
-        await driver.switchTo().window(tab); 
+    windows.forEach( async newTab => {
+      if (newTab !== currentTab) {
+        await driver.switchTo().window(newTab); 
       }
     }); 
 
-    await driver.findElement(By.xpath("//a[@href=\"/24880030?skuId=79999012\"]")).click();
+    await driver.findElement(By.xpath("//div[@class=\"size-buttons-size-buttons\"]/div[1]")).click();
     await driver.findElement(By.className("pdp-add-to-bag")).click();
     await driver.findElement(By.className("desktop-iconBag")).click();
 
   });
 
-  // it('4. Remove product from from', async () => {
+  it('4. Remove product from from', async () => {
 
-  // });
+    await driver.findElement(By.className("itemContainer-base-closeIcon")).click();
+    await driver.findElement(By.className("inlinebuttonV2-base-action confirmOrCancelModal-buttonClass")).click();
+
+    // await driver.navigate().back();
+
+  });
 
   // after(async () =>{ 
   //   driver.quit();
