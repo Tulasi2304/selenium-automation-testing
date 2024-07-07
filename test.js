@@ -44,9 +44,9 @@ describe('Open Myntra and automate search', function () {
       }
     }); 
 
-    // await driver.findElement(By.xpath("//a[@href=\"/24880030?skuId=79999012\"]")).click();
-    // await driver.findElement(By.className("pdp-add-to-bag")).click();
-    // await driver.findElement(By.className("desktop-iconBag")).click();
+    await driver.findElement(By.xpath("//a[@href=\"/24880030?skuId=79999012\"]")).click();
+    await driver.findElement(By.className("pdp-add-to-bag")).click();
+    await driver.findElement(By.className("desktop-iconBag")).click();
 
   });
 
