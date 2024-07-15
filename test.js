@@ -1,5 +1,6 @@
 const {Builder, Key, By, until} = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
+require("dotenv").config();
 // var assert = require('assert');
 
 describe('Open Myntra and automate search', function () {
@@ -15,8 +16,8 @@ describe('Open Myntra and automate search', function () {
       .forBrowser("chrome")
       .setChromeOptions(options.detachDriver(true))
       .build();
-    
-    await driver.get('https://www.myntra.com/')
+    console.log(process.env.LINK);
+    await driver.get(process.env.LINK);
     
   });
 
@@ -26,7 +27,7 @@ describe('Open Myntra and automate search', function () {
     await driver.wait(until.titleIs('Online Shopping for Women, Men, Kids Fashion & Lifestyle - Myntra'), 1000)
     .then(console.log("Opened website successfully"));
 
-    await driver.findElement(By.className("desktop-searchBar")).sendKeys("suitcase");
+    await driver.findElement(By.className("desktop-searchBar")).sendKeys(process.env.PRODUCT_NAME);
     await driver.findElement(By.className("desktop-submit")).click();
 
   });
@@ -52,7 +53,11 @@ describe('Open Myntra and automate search', function () {
 
   });
 
-  it('4. Remove product from from', async () => {
+  // it('Read items in bag', async () => {
+  //   items = await driver.findElement(By.xpath("//div[@class=\"cartItemsList\"]"))
+  // });
+
+  it('4. Remove product from bag', async () => {
 
     await driver.findElement(By.className("itemContainer-base-closeIcon")).click();
     await driver.findElement(By.className("inlinebuttonV2-base-action confirmOrCancelModal-buttonClass")).click();
