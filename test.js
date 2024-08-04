@@ -70,13 +70,26 @@ describe('Open Myntra and automate search', function () {
 
   });
 
-  it('5. Remove product from bag', async () => {
+  it("5. Proceed to payment", async () => {
+    await driver.findElement(By.css("button.css-ibwr57")).click();
+    let deliveryAddr = await driver
+      .findElement(By.css("div.addressList-base-title"))
+      .getText();
+    assert.equal(deliveryAddr, "Select Delivery Address");
+
+    console.log("\nSelect delivery address\n");
+  });
+
+  it('6. Remove product from bag', async () => {
+    await driver.navigate().back();
+    setTimeout(() => { }, 5000);
+    
     await driver.findElement(By.className("itemContainer-base-closeIcon")).click();
     await driver.findElement(By.className("inlinebuttonV2-base-action confirmOrCancelModal-buttonClass")).click();
 
     let bagEmpty = await driver.wait(until.elementLocated(By.xpath('//div[@class="emptyCart-base-emptyText"]')), 10000).getText();
     assert.equal(bagEmpty, "Hey, it feels so light!");
-    console.log("\nBag emptied\n");
+    console.log("\nMake payment\n");
     
     // await driver.navigate().back();
 
